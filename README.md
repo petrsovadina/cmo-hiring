@@ -1,84 +1,110 @@
-# CMO Hiring Challenge
+# CMO Hiring Challenge — Petr Sovadina
 
-## About Abugo
+## Přístup: 5 autonomních AI agentů, 5 challenges, paralelně
 
-[Abugo](https://www.abugo.com/) is a commerce-focused SaaS holding company based in Brno, Czech Republic. 150 people, 7 product companies:
+Namísto tradičního přístupu „vyber si 2, zpracuj ručně" jsem zvolil radikálně odlišnou cestu: **5 autonomních AI agentů pracujících paralelně**, orchestrovaných přes [Gas Town](https://github.com/steveyegge/gastown) — open-source multi-agentní systém.
 
-- **[Reservio](https://reservio.com)** — booking & business management for SMBs (20M+ bookings/year)
-- **[Smartsupp](https://smartsupp.com)** — live chat & AI chatbots for e-commerce
-- **[Survio](https://survio.com)** — online surveys & feedback
-- **[Shopsys](https://shopsys.com)** — headless e-commerce platform for large stores
-- **[Convertim](https://convertim.com)** — checkout optimization
-- **[Tanganica](https://tanganica.com)** — AI-powered marketing automation for e-shops
-- **[Sounds Good Agency](https://soundsgood.agency)** — Shopify experts agency
+**Proč?** Protože moderní CMO nepíše obsah ručně — staví systémy, které obsah produkují. A pokud může orchestrovat 5 AI agentů souběžně, může škálovat marketing operace způsobem, který je manuálně nemožný.
 
-## What This Is
-
-5 practical challenges that test your ability to use AI tools and automation to solve real marketing problems. We want to see **how you think and build**, not polished final deliverables.
-
-**Focus on process and automation breadth.** We'd rather see a wide, working pipeline with rough outputs than a narrow, hand-polished result. Show us how you'd scale this, not how you'd do it once perfectly.
-
-## How It Works
-
-1. **Fork or clone this repo** to get started
-2. Pick **2 out of 5** challenges — we recommend one analytical and one creative
-3. Each challenge has a `brief.md` with the scenario and deliverables
-4. Time budget: **~2 hours per challenge (~4-6 hours total)**
-5. **Record a Loom video** (5-15 min) walking us through your thinking, your pipeline, and a live demo — this is the most important part of your submission
-6. Submit your work however you prefer — GitHub repo, Google Drive, zip, whatever works
-
-## The Challenges
-
-| # | Challenge | Type | What It Tests |
-|---|-----------|------|---------------|
-| 01 | [Content Engine](./01-content-engine/) | Creative | Multiplatform content engine for Abugo group marketing |
-| 02 | [Landing Page Pipeline](./02-landing-page-pipeline/) | Creative | Landing page content pipeline for Reservio's new verticals |
-| 03 | [A/B Test Generator](./03-ab-test-generator/) | Analytical | A/B test variant generator for Smartsupp remarketing |
-| 04 | [Blog-to-Multiplatform](./04-blog-to-multiplatform/) | Creative | Blog post → multiplatform repurposing for Abugo portfolio |
-| 05 | [Competitive Intelligence](./05-competitive-intel/) | Analytical | Competitive intelligence system for Smartsupp vs. Tidio |
-
-## Repo Structure
-
-The repo is pre-structured — just clone/fork and fill in your work:
-
-```
-cmo-hiring/
-├── 01-content-engine/
-│   ├── brief.md              # Read this — the challenge
-│   ├── pipeline/             # Your automation (prompts, scripts, workflows, configs)
-│   └── output/               # Your generated content samples
-├── 02-landing-page-pipeline/
-│   ├── brief.md              # Read this — the challenge
-│   ├── pipeline/             # Your pipeline
-│   └── output/               # Your generated landing page content
-├── 03-ab-test-generator/
-│   ├── brief.md              # Read this — the challenge
-│   ├── generator/            # Your generator
-│   └── output/               # Your A/B test variants
-├── 04-blog-to-multiplatform/
-│   ├── brief.md              # Read this — the challenge
-│   ├── pipeline/             # Your pipeline
-│   └── output/               # Your repurposed content
-├── 05-competitive-intel/
-│   ├── brief.md              # Read this — the challenge
-│   ├── system/               # Your collection & analysis automation
-│   └── output/               # Your competitive intelligence report
-└── README.md                 # Add your overview + links to Loom videos here
-```
-
-
-## Tools & Approach
-
-We don't prescribe tools — use whatever gets the job done. But we're especially interested in seeing you use **AI-native development workflows**:
-
-- **Claude Code, Claude Cowork, Cursor** — build with AI, not just use AI for text generation
-- **Custom skills, agents, rules** — show us reusable building blocks, not one-off prompts
-- **Any AI models, automation platforms, scripts, or APIs** that make your pipeline work
-
-## Questions?
-
-Email join@abugo.com with any questions about the challenges.
+> 🎬 **[Loom Video: TODO — doplnit link]** — walkthrough celého přístupu, pipeline a live demo
 
 ---
 
-*Built by [Abugo](https://www.abugo.com/). We believe the best marketing leaders are also builders.*
+## Architektura
+
+```
+Gas Town Workspace — 10 aktivních sessions
+├── Mayor (globální koordinátor)
+├── Deacon (watchdog daemon)
+├── Witness (monitoring workerů)
+├── Refinery (merge queue → GitHub)
+└── 5 Polecatů (Claude Code agentů):
+    ├── rust    → Challenge 01: Content Engine
+    ├── chrome  → Challenge 02: Landing Page Pipeline  
+    ├── nitro   → Challenge 03: A/B Test Generator
+    ├── guzzle  → Challenge 04: Blog → Multiplatform
+    └── shiny   → Challenge 05: Competitive Intelligence
+```
+
+Každý polecat pracoval ve **svém izolovaném Git worktree**. Refinery automaticky mergovala hotovou práci na main. Celkem **47 deliverable souborů**.
+
+---
+
+## Challenges — přehled
+
+| # | Challenge | Agent | Typ | Klíčové výstupy |
+|---|-----------|-------|-----|-----------------|
+| 01 | [Content Engine](01-content-engine/) | rust | Kreativní | 5 content pillars, master prompt, 30denní kalendář |
+| 02 | [Landing Page Pipeline](02-landing-page-pipeline/) | chrome | Kreativní | 4-fázový pipeline, kompletní LP pro fitness vertikál |
+| 03 | [A/B Test Generator](03-ab-test-generator/) | nitro | Analytický | Config-driven generátor, variant matice, testing strategy |
+| 04 | [Blog → Multiplatform](04-blog-to-multiplatform/) | guzzle | Kreativní | Extract→Adapt pipeline, 6 platforem obsahu |
+| 05 | [Competitive Intel](05-competitive-intel/) | shiny | Analytický | 6 kolektorů, CI report Smartsupp vs Tidio, battle cards |
+
+---
+
+## 01 — Content Engine (Abugo Group)
+
+**Pipeline:** seed input → content pillars filter → research enrichment → multi-platform content → quality gate
+
+Systém vezme jeden „seed" (milník, trend, insight) a vygeneruje native obsah pro LinkedIn, X, Newsletter a Blog. Včetně 30denního content kalendáře a n8n/Make workflow pro automatizaci.
+
+**Klíčové soubory:** `pipeline/seed-to-content-prompt.md` (master prompt), `output/30-day-calendar.md` (1069 řádků hotového obsahu)
+
+## 02 — Landing Page Pipeline (Reservio)
+
+**Pipeline:** vertical name → research → messaging → content → SEO
+
+4-fázový pipeline parametrizovaný názvem vertikály. Demo output pro „fitness studios" — kompletní landing page s research briefem, messaging strategií, hero sekcí, features, FAQ, CTAs a SEO metadaty.
+
+**Škálování:** Stačí změnit vstupní parametr a spustit pro dalších 20+ vertikálů Reservia.
+
+## 03 — A/B Test Generator (Smartsupp)
+
+**Generator:** config.yaml (segment data) + system prompt + generation prompt → LLM → variant matice
+
+Strukturovaný generátor pro remarketing varianty. Každá varianta testuje **jednu proměnnou** — proper A/B metodologie. Výstup respektuje character limity Google Display a Meta Ads. Včetně shell skriptu pro automatizaci.
+
+## 04 — Blog → Multiplatform (Abugo Portfolio)
+
+**Pipeline:** blog URL → extract atoms → adapt per platform → 6 channels
+
+Dvoustupňový přístup: nejdřív extrakce „content atomů" (statistiky, insights, quotes), pak adaptace do platform-native formátů (LinkedIn, X thread, newsletter, Instagram carousel, video script, Dev.to). Demo na Reservio blog postu.
+
+## 05 — Competitive Intelligence (Smartsupp vs Tidio)
+
+**Systém:** 6 kolektorů → AI analýza → reporting → distribuce
+
+Opakovatelný CI systém s weekly cadence. Klíčové findings: Smartsupp má 33% cenovou výhodu na entry tieru, Tidio dominuje v content marketingu (8-12 vs 2-4 postů/měsíc), Smartsupp video recordings = unikátní moat.
+
+---
+
+## Nástroje a přístup
+
+- **Gas Town** — multi-agent orchestrátor (koordinace 5 Claude Code instancí)
+- **Claude Code** — AI coding agent (runtime pro všech 5 polecatů)
+- **Beads** — Git-native issue tracker (task management)
+- **tmux** — terminal multiplexer (sessions management)
+
+Všechny pipeline jsou **prompt-first** — fungují s jakýmkoli LLM (Claude, GPT, Gemini). Žádný vendor lock-in.
+
+---
+
+## Jak spustit pipeline lokálně
+
+```bash
+# Content Engine — vygeneruj obsah ze seedu
+cat 01-content-engine/pipeline/seed-to-content-prompt.md | claude --print
+
+# Landing Page — změň vertikálu a spusť
+cat 02-landing-page-pipeline/pipeline/00-orchestrator.md | claude --print
+
+# A/B Generator
+cd 03-ab-test-generator/generator && ./generate.sh pricing_page_abandoners ../output
+
+# Blog Repurposing
+cd 04-blog-to-multiplatform/pipeline && ./run-pipeline.sh <blog-url>
+```
+
+---
+
+*Vytvořil Petr Sovadina — AI-first přístup k marketingu. 📧 petr.sovadina9@gmail.com*
