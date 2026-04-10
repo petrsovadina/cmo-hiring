@@ -1,0 +1,112 @@
+# Blog-to-Multiplatform Pipeline Configuration
+# Swap these values to repurpose any blog post for any brand.
+
+source:
+  brand: Reservio
+  blog_url: https://www.reservio.com/blog/tips/service-menu-audit
+  title: "8-Step Service Menu Audit to Improve Booking Conversion"
+  industry: SaaS / Online Booking / Service Businesses
+  target_audience: Small business owners (salons, fitness studios, clinics, freelancers)
+
+brand_voice:
+  tone: Helpful, direct, practical — like advice from a smart friend who runs a business
+  personality: Expert but approachable, data-informed but not academic
+  avoid:
+    - Corporate jargon
+    - Pushy sales language
+    - Overly casual/meme-heavy tone
+  cta_style: Soft — focus on value, mention Reservio naturally where relevant
+
+platforms:
+  linkedin:
+    count: 2
+    formats:
+      - insight_post  # Lead with a surprising stat or counterintuitive take
+      - contrarian_post  # Challenge conventional wisdom
+    specs:
+      max_length: 1300 characters
+      hashtags: 3-5
+      tone: Professional but conversational
+      hook: First line must stop the scroll — question, stat, or bold claim
+      structure: Hook → Story/Insight → Takeaway → CTA
+
+  twitter_x:
+    count: 1
+    format: thread
+    specs:
+      tweets: 7-10
+      max_per_tweet: 280 characters
+      tone: Punchy, direct, slightly informal
+      hook: Tweet 1 must be standalone-compelling with a thread emoji
+      structure: Hook → Problem → Steps/Stats → Summary → CTA
+
+  newsletter:
+    count: 1
+    format: digest_section
+    specs:
+      length: 150-200 words
+      tone: Curated, insider-knowledge feel
+      structure: Context → Key insight → Why it matters → Link to full post
+
+  instagram_carousel:
+    count: 1
+    format: carousel
+    specs:
+      slides: 5-7
+      tone: Visual-first, short punchy text
+      structure:
+        - slide_1: Hook (bold claim or question)
+        - slide_2_to_n: Value slides (1 tip per slide, max 30 words)
+        - slide_last: CTA (save/share/link in bio)
+      design_notes: Use large text, contrasting colors, minimal words per slide
+
+  short_video_script:
+    count: 1
+    format: 60_second_script
+    specs:
+      duration: 45-60 seconds
+      tone: Energetic, direct-to-camera feel
+      structure: Hook (3s) → Problem (10s) → Solution steps (35s) → CTA (10s)
+      platform: Reels / TikTok / Shorts
+
+  dev_community:
+    count: 1
+    format: adapted_article
+    specs:
+      length: 600-900 words
+      tone: Technical-adjacent, practical, how-to focused
+      platform: Dev.to or Hashnode
+      structure: Intro → Reframed problem → Key steps → Code/tool analogy → Wrap-up
+      angle: Frame as UX/conversion optimization for technical audience
+
+scheduling_strategy:
+  # Recommended posting order and timing after blog publish
+  day_0: linkedin_post_1  # Same day as blog — capture initial momentum
+  day_1: twitter_thread   # Next day — thread format works well for weekday mornings
+  day_2: newsletter       # Include in next scheduled send
+  day_3: instagram_carousel  # Visual content mid-week
+  day_4: linkedin_post_2  # Second angle, different audience segment
+  day_5: short_video      # End of week — video performs well Thu-Fri
+  day_7: dev_community    # Following week — adapted for different audience
+
+measurement:
+  primary_metrics:
+    - engagement_rate_per_platform  # Likes, comments, shares relative to impressions
+    - click_through_to_blog        # UTM-tagged links back to source post
+    - booking_conversion           # End goal — did content drive actual bookings?
+  secondary_metrics:
+    - follower_growth              # Platform audience building
+    - save_rate                    # Instagram saves = high intent signal
+    - thread_completion_rate       # Twitter — how many read to the end?
+  tools:
+    - UTM parameters per platform (utm_source=linkedin, utm_medium=social, etc.)
+    - Reservio analytics for booking attribution
+    - Platform native analytics (LinkedIn Analytics, Twitter Analytics, Meta Insights)
+
+automation_trigger:
+  # How to auto-trigger when a new blog post is published
+  options:
+    - rss_webhook: Monitor Reservio blog RSS feed → trigger pipeline on new entry
+    - cms_hook: WordPress/Ghost publish webhook → API call to pipeline
+    - zapier_make: RSS trigger → Claude API → format outputs → schedule via Buffer/Hootsuite
+  recommended: rss_webhook + Claude API + scheduling tool (Buffer or native platform schedulers)
