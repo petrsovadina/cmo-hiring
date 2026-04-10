@@ -1,0 +1,152 @@
+# A/B Test Variant Generator — Configuration
+# Smartsupp Remarketing Campaign Generator
+
+# ── Segment Definitions ──────────────────────────────────────────────
+segments:
+  pricing_page_abandoners:
+    name: "Pricing Page Abandoners"
+    description: "Users who viewed the Smartsupp pricing page but bounced without converting"
+    behavior: "Visited pricing page, compared plans, left without starting trial or purchasing"
+    primary_objection: "Price sensitivity / unclear ROI"
+    secondary_objections:
+      - "Not sure which plan fits"
+      - "Need to compare with competitors first"
+      - "Budget approval needed"
+      - "Free plan seems sufficient"
+    intent_signal: "High — actively evaluating, price is the barrier"
+    funnel_stage: "Bottom of funnel (consideration/decision)"
+    remarketing_window_days: 30
+    audience_temperature: "warm"
+
+  inactive_trials:
+    name: "Inactive Trials"
+    description: "Signed up for trial, never installed the chat widget"
+    behavior: "Created account, did not complete onboarding (widget installation)"
+    primary_objection: "Too complex / forgot / not priority"
+    intent_signal: "Medium — showed interest but lost momentum"
+    funnel_stage: "Activation"
+    remarketing_window_days: 14
+
+  active_trials_no_conversion:
+    name: "Active Trials, No Conversion"
+    description: "Using free plan, didn't upgrade to paid"
+    behavior: "Active usage on free tier, no upgrade action"
+    primary_objection: "Unclear upgrade value / free is enough"
+    intent_signal: "Medium-High — using product, value not clear enough"
+    funnel_stage: "Monetization"
+    remarketing_window_days: 45
+
+# ── Platform Specifications ──────────────────────────────────────────
+platforms:
+  google_display:
+    name: "Google Display Network"
+    format: "Responsive Display Ad"
+    constraints:
+      headline_max_chars: 30
+      long_headline_max_chars: 90
+      description_max_chars: 90
+      business_name: "Smartsupp"
+      headlines_count: 5        # up to 5 headlines
+      descriptions_count: 5     # up to 5 descriptions
+    notes: "Google mixes headlines/descriptions. Each must work standalone."
+
+  meta:
+    name: "Meta (Facebook / Instagram)"
+    format: "Single Image / Carousel Ad"
+    constraints:
+      primary_text_max_chars: 125    # above fold
+      headline_max_chars: 40
+      description_max_chars: 30
+      cta_options:
+        - "Learn More"
+        - "Sign Up"
+        - "Get Started"
+        - "Shop Now"
+        - "Try Free"
+    notes: "Primary text is most visible. Headline appears below image."
+
+# ── Test Variables ───────────────────────────────────────────────────
+# Variables to test, ordered by expected impact for pricing page abandoners
+test_variables:
+  - id: "headline_angle"
+    name: "Headline Angle"
+    description: "The primary persuasion frame used in the headline"
+    variants:
+      - "roi_reframe"          # Lead with numbers / ROI
+      - "social_proof"         # Lead with adoption / trust
+      - "loss_aversion"        # Lead with what they're losing
+      - "competitor_comparison" # Position against alternatives
+      - "simplicity"           # Address complexity objection
+      - "urgency"              # Time-limited or scarcity
+    priority: 1
+    rationale: "Headlines drive click-through. Testing angle first isolates biggest lever."
+
+  - id: "cta_copy"
+    name: "CTA Copy"
+    description: "Call-to-action button text"
+    variants:
+      - "start_free_trial"     # Standard
+      - "see_pricing"          # Direct to decision point
+      - "calculate_roi"        # Value-oriented
+      - "get_started_free"     # Emphasize free
+    priority: 2
+    rationale: "CTA is second-biggest conversion driver after headline."
+
+  - id: "emotional_trigger"
+    name: "Emotional Trigger"
+    description: "The underlying emotional driver in the body copy"
+    variants:
+      - "fomo"                 # Missing out on growth
+      - "trust"                # Safe, proven choice
+      - "aspiration"           # What success looks like
+      - "pain"                 # Current problem amplification
+    priority: 3
+    rationale: "Body copy reinforces the headline angle. Test after angle is settled."
+
+  - id: "visual_concept"
+    name: "Visual Concept"
+    description: "The type of creative/image used"
+    variants:
+      - "product_screenshot"   # Show the product
+      - "stats_graphic"        # Numbers and data
+      - "customer_logos"       # Social proof
+      - "before_after"         # Transformation
+    priority: 4
+    rationale: "Visual testing is expensive (needs design). Test last."
+
+# ── Smartsupp Research Data ──────────────────────────────────────────
+smartsupp:
+  product: "Live chat & AI chatbot platform for e-commerce"
+  url: "https://smartsupp.com"
+  pricing:
+    free: "1 agent, 50 conversations/mo"
+    standard: "EUR 14/mo — 3 agents, unlimited conversations"
+    pro: "EUR 19.50/mo — AI chatbot, video recordings"
+    ultimate: "Custom pricing — dedicated support, custom integrations"
+  key_value_props:
+    - "Increase conversions with live chat"
+    - "Automate support with AI chatbot"
+    - "Understand visitors via video recordings"
+    - "Easy setup — install in minutes"
+  differentiators:
+    - "Built for e-commerce (Shopify, WooCommerce, PrestaShop integrations)"
+    - "AI chatbot included from Pro plan"
+    - "Video recordings of visitor sessions"
+    - "Affordable vs Intercom/Drift/Zendesk"
+  competitors:
+    - name: "Intercom"
+      positioning: "Premium, enterprise-focused"
+      price_range: "$39-99+/mo"
+    - name: "Drift"
+      positioning: "Revenue-focused, complex"
+      price_range: "$2,500+/mo"
+    - name: "Tidio"
+      positioning: "Direct competitor, similar price"
+      price_range: "$0-39/mo"
+    - name: "LiveChat"
+      positioning: "Established, feature-rich"
+      price_range: "$20-69/mo"
+  social_proof:
+    active_users: "50,000+"
+    markets: "Central/Eastern Europe, expanding globally"
+    reviews: "4.7/5 on G2, 4.6/5 on Capterra"
