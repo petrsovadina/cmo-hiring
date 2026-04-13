@@ -1,5 +1,35 @@
 # CMO Hiring Challenge — Petr Sovadina × Abugo
 
+## 🚀 Live App
+
+**[→ Otevři CMO Toolkit](https://app-sovadina.vercel.app)** — interaktivní Next.js aplikace se všemi 5 AI-powered marketing nástroji
+
+> Moderní CMO nepíše obsah. Staví systémy, které obsah produkují.
+
+### Co aplikace umí
+
+| Nástroj | Input | Output |
+|---------|-------|--------|
+| **Content Engine** | Topic / milestone | LinkedIn · X · Newsletter · Blog |
+| **Landing Page Pipeline** | Vertical name | Full page copy + SEO metadata |
+| **A/B Test Generator** | Remarketing segment | 6–8 variants · Google + Meta |
+| **Blog Repurpose** | Blog post URL / text | 6 platform-native formats |
+| **Competitive Intel** | Company A vs B | Full CI report + battle card |
+
+### Tech stack
+Next.js 16 App Router · shadcn/ui · Anthropic Claude API (streaming) · Vercel Edge Runtime
+
+### Spuštění lokálně
+```bash
+cd app
+cp .env.example .env.local
+# Přidej ANTHROPIC_API_KEY do .env.local
+npm install
+npm run dev
+```
+
+---
+
 ## 🎬 Prezentace
 
 **[→ Otevři presentation.html](./presentation.html)** — interaktivní slide deck s mluveným audio komentářem v češtině (10 slidů, ~8 minut)
