@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Zap, Globe, FlaskConical, Share2, BarChart2, ArrowRight } from "lucide-react";
+import { Zap, Globe, FlaskConical, Share2, BarChart2, ArrowRight, Presentation } from "lucide-react";
 
 const tools = [
   {
@@ -129,8 +129,25 @@ export default function Home() {
         })}
       </div>
 
+      {/* Presentation link */}
+      <a
+        href="/presentation.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-8 flex items-center gap-4 p-5 rounded-xl border border-border bg-card/50 hover:border-primary/50 transition-colors group"
+      >
+        <div className="p-2.5 rounded-lg bg-accent shrink-0">
+          <Presentation className="w-5 h-5" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-medium group-hover:text-primary transition-colors">Interactive Presentation</p>
+          <p className="text-xs text-muted-foreground mt-0.5">10 slides · Czech audio narration · ~8 minutes — the full story of how this toolkit was built with 5 autonomous AI agents</p>
+        </div>
+        <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
+      </a>
+
       {/* Architecture note */}
-      <div className="mt-8 p-6 rounded-xl border border-border bg-card/30">
+      <div className="mt-4 p-6 rounded-xl border border-border bg-card/30">
         <p className="text-sm font-medium mb-2">Architecture</p>
         <p className="text-sm text-muted-foreground">
           Built with Next.js 15 App Router + shadcn/ui. Each tool streams responses directly from Claude via Anthropic API — no database, no auth, no latency from intermediary services. The pipelines are direct implementations of the prompts developed during the multi-agent Gas Town build.
